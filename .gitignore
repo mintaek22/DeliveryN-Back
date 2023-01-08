@@ -35,3 +35,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# CMake
+cmake-build-*/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# SonarLint plugin
+.idea/sonarlint/
+
