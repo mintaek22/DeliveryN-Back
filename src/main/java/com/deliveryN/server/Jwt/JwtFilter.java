@@ -23,10 +23,7 @@ public class JwtFilter extends GenericFilterBean {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final TokenProvider tokenProvider;
 
-
-
-
-
+    
 
     //필터링 로직 jwt토큰의 인증정보를 security context에 넣음
     @Override

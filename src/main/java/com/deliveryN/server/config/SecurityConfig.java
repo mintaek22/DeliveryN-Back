@@ -56,8 +56,9 @@ public class SecurityConfig{
                 //인증못받은 유저가 접속할수 있는 api
                 .regexMatchers("/user/.*").permitAll()
                 .regexMatchers("/api/.*").permitAll()
+                .regexMatchers("/.*").permitAll()
                 //인증이 필요하다
-                .regexMatchers("/.*").hasRole("USER")
+                //.regexMatchers("/.*").hasRole("USER")
                 .anyRequest().authenticated();
 
 

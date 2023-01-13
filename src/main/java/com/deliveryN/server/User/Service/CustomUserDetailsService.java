@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String email) {
 
-        Optional<User> user= Optional.ofNullable(userRepository.findByEmail(email).get(0));
+        Optional<User> user= userRepository.findByEmail(email);
         if(user.isEmpty()){
             return (UserDetails) new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다.");
         }

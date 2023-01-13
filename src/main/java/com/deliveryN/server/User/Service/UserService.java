@@ -3,6 +3,7 @@ package com.deliveryN.server.User.Service;
 import com.deliveryN.server.User.Dto.User.SignUpDto;
 import com.deliveryN.server.User.Entity.User;
 import com.deliveryN.server.User.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+
     public void Register(SignUpDto user){
         String encodePassword = passwordEncoder.encode(user.getPassword());
         User freshUser = new User();
@@ -31,10 +30,7 @@ public class UserService {
     }
 
     public Optional<User> LoginCheck(String email){
-        if (userRepository.findByEmail(email).size()!=0){
-            return Optional.ofNullable(userRepository.findByEmail(email).get(0));
-        }
-        return Optional.empty();
+        return userRepository.findByEmail(email);
     }
 
     public boolean PasswordCheck(String password,String passwordCheck){
