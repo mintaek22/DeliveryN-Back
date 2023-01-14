@@ -1,6 +1,5 @@
 package com.deliveryN.server.Post.Service;
 
-import com.deliveryN.server.Post.Entitiy.Restaurant;
 import com.deliveryN.server.Post.Repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
