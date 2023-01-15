@@ -22,11 +22,9 @@ public class QPost extends EntityPathBase<Post> {
 
     public static final QPost post = new QPost("post");
 
-    public final StringPath category = createString("category");
-
     public final NumberPath<Integer> count = createNumber("count", Integer.class);
 
-    public final DatePath<java.sql.Date> deadLine = createDate("deadLine", java.sql.Date.class);
+    public final DateTimePath<java.sql.Timestamp> deadLine = createDateTime("deadLine", java.sql.Timestamp.class);
 
     public final NumberPath<Long> PostId = createNumber("PostId", Long.class);
 

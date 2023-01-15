@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionController {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> bindException(BindException e){
-        ErrorResponse response = ErrorResponse.builder()
+    public ResponseEntity<CustomBody> bindException(BindException e){
+        CustomBody response = CustomBody.builder()
                 .message("잘못된 요청")
                 .detail("적절한 인자값이 들어오지 않았습니다")
                 .build();
@@ -24,8 +24,8 @@ public class ApiExceptionController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> HttpMessageNotReadableException(HttpMessageNotReadableException e){
-        ErrorResponse response = ErrorResponse.builder()
+    public ResponseEntity<CustomBody> HttpMessageNotReadableException(HttpMessageNotReadableException e){
+        CustomBody response = CustomBody.builder()
                 .message("잘못된 요청")
                 .detail("body 값이 존재하지 않습니다")
                 .build();
@@ -35,8 +35,8 @@ public class ApiExceptionController {
 
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> exHandle(CustomException e){
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    public ResponseEntity<CustomBody> exHandle(CustomException e){
+        return CustomBody.toResponseEntity(e.getErrorCode());
     }
 
 }

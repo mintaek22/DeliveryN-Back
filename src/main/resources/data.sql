@@ -24,7 +24,6 @@ INSERT INTO restaurant (restaurant_key,name,category) VALUES (22,'굽네치킨&�
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (23,'가마로강정-광흥창점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (24,'굽네치킨&피자-이대역점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (25,'교촌치킨-홍대점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (26,'치킨플러스-서교점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (27,'지코바치킨-홍대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (28,'이나닭강정-신촌점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (29,'굽네치킨&피자-서교점','치킨');
@@ -38,19 +37,15 @@ INSERT INTO restaurant (restaurant_key,name,category) VALUES (36,'맥시칸치�
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (37,'숯미남숯불치킨에미친남자','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (38,'순살만공격-마포신촌점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (39,'바른치킨-서강대점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (40,'디디치킨-연세대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (41,'지코바치킨-서울성산1호점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (42,'쌀통에퐁닭','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (43,'자담치킨-신촌점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (44,'티바두마리치킨-신수서강대점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (45,'페리카나-홍익대점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (46,'네네치킨-서교점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (47,'동근이숯불두마리치킨-망원점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (48,'훌랄라치킨-홍대1점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (49,'푸라닭-합정점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (50,'멕시칸치킨-연남점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (51,'파스타입니다-마포점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (52,'롯데리아-홍대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (53,'롯데리아-신촌로터리점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (54,'KFC-홍익대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (55,'처갓집양념치킨-염리점','치킨');
@@ -67,7 +62,6 @@ INSERT INTO restaurant (restaurant_key,name,category) VALUES (65,'꼬꼬순이',
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (66,'처갓집양념치킨-홍대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (67,'빨강꼬치빨강치킨','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (68,'디디치킨-아현점','치킨');
-INSERT INTO restaurant (restaurant_key,name,category) VALUES (69,'순살킹-연세대점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (70,'치르메스치킨-신촌점','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (71,'델리인디아','치킨');
 INSERT INTO restaurant (restaurant_key,name,category) VALUES (72,'순살킹-아현점','치킨');

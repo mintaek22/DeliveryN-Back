@@ -4,7 +4,7 @@ import com.deliveryN.server.User.Entity.User;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -14,19 +14,17 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long PostId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="userId")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="restaurantKey")
     private Restaurant restaurant;
 
-    private String category;
-
     private Integer count;
 
-    private Date deadLine;
+    private Timestamp deadLine;
 
     //위도 경도
     private Double x;
@@ -35,4 +33,6 @@ public class Post {
 
     public Post() {
     }
+
+
 }

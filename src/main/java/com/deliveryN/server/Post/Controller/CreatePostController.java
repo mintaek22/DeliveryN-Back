@@ -4,7 +4,9 @@ import com.deliveryN.server.Jwt.TokenProvider;
 import com.deliveryN.server.Post.Dto.CreatePostDto;
 import com.deliveryN.server.Post.Service.CreatePostService;
 import com.deliveryN.server.Post.Service.RestaurantService;
+import com.deliveryN.server.exception.CustomBody;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CreatePostController {
@@ -35,7 +38,7 @@ public class CreatePostController {
 
         createPostService.post(postDto,email);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new CustomBody(),HttpStatus.OK);
     }
 
     //모든 식당 리스트 다 가져오기

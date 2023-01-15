@@ -1,6 +1,6 @@
 package com.deliveryN.server.Post.Controller;
 
-import com.deliveryN.server.Post.Entitiy.Post;
+import com.deliveryN.server.Post.Dto.PostResponseDto;
 import com.deliveryN.server.Post.Service.PostListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,18 @@ public class PostController {
      *카테고리 0,1,2,3,4,5,6
      */
     @GetMapping("/post/{category}")
-    public ResponseEntity<List<Post>> getPost(@PathVariable("category")Integer category,Double x,Double y){
+    public ResponseEntity<List<PostResponseDto>> getPost(@PathVariable("category")Integer category, Double x, Double y){
 
         String category_name = category_list[category];
 
-        List<Post> posts = postListService.getPosts(category_name,x,y);
+        List<PostResponseDto> posts = postListService.getPostsByCategory(category_name,x,y);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/post")
+    public ResponseEntity<List<PostResponseDto>> getPostByName(String name, Double x, Double y){
+        List<PostResponseDto> posts = postListService.getPostsByName(name,x,y);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }

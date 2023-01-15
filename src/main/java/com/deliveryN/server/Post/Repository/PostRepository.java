@@ -8,8 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
-    @Query(value = "select p from Post p Restaurant r " +
-            "where p.restaurantKey = r.restaurantKey" +
-            "and r.category = :category",nativeQuery = true)
-    List<Post> findByCategory(@Param("category") String category);
+    @Query(value = "select p from Post p join fetch p.restaurant r where r.category = :category")
+    List<Post> FindByCategory(@Param("category") String category);
+
+    @Query(value = "select p from Post p join fetch p.restaurant r where r.name = :name")
+    List<Post> FindByName(@Param("name") String name);
 }

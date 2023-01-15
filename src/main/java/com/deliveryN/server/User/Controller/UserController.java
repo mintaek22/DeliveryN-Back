@@ -6,8 +6,9 @@ import com.deliveryN.server.User.Dto.User.*;
 import com.deliveryN.server.User.Dto.result.ResultDto;
 import com.deliveryN.server.User.Entity.User;
 import com.deliveryN.server.User.Service.UserService;
+import com.deliveryN.server.exception.CustomBody;
 import com.deliveryN.server.exception.CustomException;
-import com.deliveryN.server.exception.ErrorCode;
+import com.deliveryN.server.exception.CustomMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class UserController {
         String email = tokenProvider.getId(jwt);
         Optional<User> user = userService.LoginCheck(email);
 
-        return new ResponseEntity<>(new UserInfoDto(user.get().getNickName()),HttpStatus.OK);
+        return new ResponseEntity<>(new UserInfoDto(user.get().getNickName()), org.springframework.http.HttpStatus.OK);
     }
     @GetMapping("/user/login")
     public ResponseEntity<Object> signIn(@Validated LoginDto user){
@@ -60,11 +61,11 @@ public class UserController {
             String jwt = tokenProvider.createToken(authentication);
             log.info(jwt);
 
-            return new ResponseEntity<>(new TokenDto(jwt), HttpStatus.OK);
+            return new ResponseEntity<>(new TokenDto(jwt),HttpStatus.OK);
         }
 
         //존재하지 않는 이메일
-        throw new CustomException(ErrorCode.INVALID_EMAIL);
+        throw new CustomException(CustomMessage.INVALID_EMAIL);
     }
 
     @PostMapping("/user/signup")
@@ -73,11 +74,11 @@ public class UserController {
         Optional<User> userCheck = userService.LoginCheck(user.getEmail());
 
         if (userCheck.isPresent()) {
-            throw new CustomException(ErrorCode.CONFLICT_EMAIL);
+            throw new CustomException(CustomMessage.CONFLICT_EMAIL);
         }
         userService.Register(user);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new CustomBody(),HttpStatus.OK);
     }
 
     //이메일 중복확인
@@ -97,7 +98,7 @@ public class UserController {
             return new ResponseEntity<>(new ResultDto(true), HttpStatus.OK);
         }
         //비밀번호 안맞음
-        return new ResponseEntity<>(new ResultDto(false), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ResultDto(false),HttpStatus.CONFLICT);
     }
 
     @PutMapping("/password")
@@ -105,7 +106,7 @@ public class UserController {
 
         userService.PasswordChange(user.getEmail(), user.getPassword());
 
-        return new ResponseEntity<>(new ResultDto(true), HttpStatus.OK);
+        return new ResponseEntity<>(new ResultDto(true),HttpStatus.OK);
     }
 
 
