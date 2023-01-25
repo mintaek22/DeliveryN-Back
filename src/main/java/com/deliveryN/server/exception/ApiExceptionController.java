@@ -36,7 +36,7 @@ public class ApiExceptionController {
 
     @ExceptionHandler
     public ResponseEntity<CustomBody> exHandle(CustomException e){
-        return CustomBody.toResponseEntity(e.getErrorCode());
+        return CustomBody.toResponseEntity(e.getCustomMessage());
     }
 
 }

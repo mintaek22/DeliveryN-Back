@@ -1,13 +1,14 @@
 package com.deliveryN.server.Post.Entitiy;
 
-import com.deliveryN.server.User.Entity.User;
-import lombok.Data;
+import com.deliveryN.server.Member.Entity.Member;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Data
+@Getter
 public class Post {
 
     @Id
@@ -16,23 +17,30 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="userId")
-    private User user;
+    private final Member member;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="restaurantKey")
-    private Restaurant restaurant;
+    private final Restaurant restaurant;
 
-    private Integer count;
+    private final Integer count;
 
-    private Timestamp deadLine;
+    private final Timestamp deadLine;
 
     //위도 경도
-    private Double x;
+    private final Double x;
 
-    private Double y;
+    private final Double y;
 
-    public Post() {
+    @Builder
+    public Post(Member member, Restaurant restaurant, Integer count, Timestamp deadLine, Double x, Double y) {
+        this.member = member;
+        this.restaurant = restaurant;
+        this.count = count;
+        this.deadLine = deadLine;
+        this.x = x;
+        this.y = y;
     }
 
-
+    
 }

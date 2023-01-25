@@ -1,4 +1,4 @@
-package com.deliveryN.server.User.Dto.Token;
+package com.deliveryN.server.Member.Dto.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenDto {
-    private String token;
+public class ResultDto {
+    private boolean result;
 }

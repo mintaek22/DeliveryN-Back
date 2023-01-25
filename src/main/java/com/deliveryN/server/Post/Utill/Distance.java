@@ -8,8 +8,8 @@ import java.util.Comparator;
 public class Distance implements Comparator<Post> {
 
     //사용자 위치
-    double x;
-    double y;
+    private final double x;
+    private final double y;
 
     public Distance(double x, double y) {
         this.x = x;

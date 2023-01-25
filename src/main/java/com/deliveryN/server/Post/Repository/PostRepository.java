@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
     @Query(value = "select p from Post p join fetch p.restaurant r where r.category = :category")
-    List<Post> FindByCategory(@Param("category") String category);
-
+    List<Post> findByCategory(@Param("category") String category);
     @Query(value = "select p from Post p join fetch p.restaurant r where r.name = :name")
-    List<Post> FindByName(@Param("name") String name);
+    List<Post> findByName(@Param("name") String name);
 }

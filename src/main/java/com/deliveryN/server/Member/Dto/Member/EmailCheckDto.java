@@ -1,4 +1,4 @@
-package com.deliveryN.server.User.Dto.User;
+package com.deliveryN.server.Member.Dto.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,17 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignUpDto {
-
-    @NotBlank
-    private String name;
+public class EmailCheckDto {
 
     @NotBlank
     private String email;
 
-    @NotBlank
-    private String password;
-
-    @NotBlank
-    private String nickName;
 }

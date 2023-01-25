@@ -1,21 +1,23 @@
-package com.deliveryN.server.User.Controller;
+/*
+package com.deliveryN.server.Member.Controller;
 
-import com.deliveryN.server.Jwt.JwtFilter;
 import com.deliveryN.server.Jwt.TokenProvider;
-import com.deliveryN.server.User.Dto.Token.TokenDto;
-import com.deliveryN.server.User.Dto.User.SignUpDto;
-import com.deliveryN.server.User.Service.UserService;
+import com.deliveryN.server.Member.Dto.Member.SignUpDto;
+import com.deliveryN.server.Member.Dto.Token.TokenDto;
+import com.deliveryN.server.Member.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,18 +32,21 @@ import java.net.http.HttpResponse;
 @RequiredArgsConstructor
 public class SNSController {
 
-    private final UserService userService;
+    private final MemberService memberService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
 
-    /**
+
+    */
+/**
      * 1.프론트에서 해당 url로 이동하면 리다이렉트 https://kauth.kakao.com/oauth/authorize?client_id=fdf1afb684e900ba689ebcca872a41b6&redirect_uri=http://localhost:8080/api/oauth/kakao&response_type=code
      * 2.카카오 정해진 인증을 걸치면 아래 컨트롤러로 인가코드와 함께 들어온다
      * 3.인가코드를 이용하여 access 토큰을 카카오한테 받는다
      * 4.발급받은 토큰으로 가입처리를 한다
-     */
+     *//*
+
     @GetMapping("/kakao")
     public void Kakao(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=fdf1afb684e900ba689ebcca872a41b6&redirect_uri=http://localhost:8080/api/oauth/kakao&response_type=code");
@@ -94,8 +99,8 @@ public class SNSController {
         user.setPassword(id_token);
 
         //user가 존재하면 로그인하고 아니면 회원가입시키기
-        if(userService.LoginCheck(user.getEmail()).isEmpty()){
-            userService.Register(user);
+        if(memberService.LoginCheck(user.getEmail()).isEmpty()){
+           memberService.Register(user);
         }
 
         //토큰리턴하기
@@ -109,12 +114,14 @@ public class SNSController {
         return new ResponseEntity<>(new TokenDto(jwt), HttpStatus.OK);
     }
 
-    /**
+    */
+/**
      * 1.프론트에서 https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=viIJ4anvkBbvMjklGcP2&state=651651651651&redirect_uri=http://localhost:8080/api/oauth/naver 들어간다
      * 2.네이버에서 정해진 인증을 걸치면 아래 컨트롤러로 인가코드와 함께 들어온다
      * 3.인가코드를 이용하여 access 토큰을 네이버한테 받는다
      * 4.발급받은 토큰으로 가입처리를 한다
-     */
+     *//*
+
     @GetMapping("/naver")
     public void naver(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=viIJ4anvkBbvMjklGcP2&state=651651651651&redirect_uri=http://localhost:8080/api/oauth/naver");
@@ -165,8 +172,8 @@ public class SNSController {
         user.setPassword(id_token);
 
         //user가 존재하면 로그인하고 아니면 회원가입시키기
-        if(userService.LoginCheck(user.getEmail()).isEmpty()){
-            userService.Register(user);
+        if(memberService.LoginCheck(user.getEmail()).isEmpty()){
+            memberService.Register(user);
         }
 
         //토큰리턴하기
@@ -182,3 +189,4 @@ public class SNSController {
 
 
 }
+*/

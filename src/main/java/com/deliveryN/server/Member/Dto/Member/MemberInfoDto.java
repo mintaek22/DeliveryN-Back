@@ -1,4 +1,5 @@
-package com.deliveryN.server.User.Dto.User;
+package com.deliveryN.server.Member.Dto.Member;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +10,8 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordFindDto {
+public class MemberInfoDto {
 
     @NotBlank
-    private String name;
-
-    @NotBlank
-    private String phoneNumber;
-
+    private String nickName;
 }

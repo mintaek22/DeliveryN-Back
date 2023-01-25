@@ -16,14 +16,15 @@ public class PostListService {
 
     private final PostRepository postRepository;
 
+
     public List<PostResponseDto> getPostsByCategory(String category, Double x, Double y){
-        List<Post> posts = postRepository.FindByCategory(category);
+        List<Post> posts = postRepository.findByCategory(category);
         posts.sort(new Distance(x,y));
         return posts.stream().map(PostResponseDto::new).collect(Collectors.toList());
     }
 
     public List<PostResponseDto> getPostsByName(String name, Double x, Double y){
-        List<Post> posts = postRepository.FindByName(name);
+        List<Post> posts = postRepository.findByName(name);
         posts.sort(new Distance(x,y));
         return posts.stream().map(PostResponseDto::new).collect(Collectors.toList());
     }

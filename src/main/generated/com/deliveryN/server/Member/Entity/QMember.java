@@ -1,4 +1,4 @@
-package com.deliveryN.server.User.Entity;
+package com.deliveryN.server.Member.Entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QUser is a Querydsl query type for User
+ * QMember is a Querydsl query type for Member
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUser extends EntityPathBase<User> {
+public class QMember extends EntityPathBase<Member> {
 
-    private static final long serialVersionUID = 1577673853L;
+    private static final long serialVersionUID = -196270885L;
 
-    public static final QUser user = new QUser("user");
+    public static final QMember member = new QMember("member1");
 
     public final StringPath email = createString("email");
 
@@ -29,18 +29,20 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
 
+    public final StringPath role = createString("role");
+
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
-    public QUser(String variable) {
-        super(User.class, forVariable(variable));
+    public QMember(String variable) {
+        super(Member.class, forVariable(variable));
     }
 
-    public QUser(Path<? extends User> path) {
+    public QMember(Path<? extends Member> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+    public QMember(PathMetadata metadata) {
+        super(Member.class, metadata);
     }
 
 }

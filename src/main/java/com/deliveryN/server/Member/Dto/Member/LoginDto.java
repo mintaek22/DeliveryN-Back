@@ -1,4 +1,4 @@
-package com.deliveryN.server.User.Dto.User;
+package com.deliveryN.server.Member.Dto.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

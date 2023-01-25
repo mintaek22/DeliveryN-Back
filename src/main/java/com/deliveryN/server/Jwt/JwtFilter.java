@@ -1,6 +1,5 @@
 package com.deliveryN.server.Jwt;
 
-import com.deliveryN.server.User.Service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +29,12 @@ public class JwtFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+
         //헤더에 있는 토큰 정보를 가지고 온다
         String jwt = tokenProvider.resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
 
+        //토큰의 유효성을 확인하고 유효하면 authentication을 가져오고 securityContextHolder에 넣는다
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);

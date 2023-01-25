@@ -26,11 +26,11 @@ public class QPost extends EntityPathBase<Post> {
 
     public final DateTimePath<java.sql.Timestamp> deadLine = createDateTime("deadLine", java.sql.Timestamp.class);
 
+    public final com.deliveryN.server.Member.Entity.QMember member;
+
     public final NumberPath<Long> PostId = createNumber("PostId", Long.class);
 
     public final QRestaurant restaurant;
-
-    public final com.deliveryN.server.User.Entity.QUser user;
 
     public final NumberPath<Double> x = createNumber("x", Double.class);
 
@@ -54,8 +54,8 @@ public class QPost extends EntityPathBase<Post> {
 
     public QPost(Class<? extends Post> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.member = inits.isInitialized("member") ? new com.deliveryN.server.Member.Entity.QMember(forProperty("member")) : null;
         this.restaurant = inits.isInitialized("restaurant") ? new QRestaurant(forProperty("restaurant")) : null;
-        this.user = inits.isInitialized("user") ? new com.deliveryN.server.User.Entity.QUser(forProperty("user")) : null;
     }
 
 }

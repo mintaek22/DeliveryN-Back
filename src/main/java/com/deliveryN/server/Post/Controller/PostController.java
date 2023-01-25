@@ -16,7 +16,6 @@ import java.util.List;
 public class PostController {
 
     private final PostListService postListService;
-
     private final static String[] category_list = new String[] {"치킨","피자/양식","한식","중식","일식/돈까스","족발/보쌈","분식"};
 
     /**거리순

@@ -1,12 +1,12 @@
 package com.deliveryN.server.Post.Entitiy;
 
-import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@Data
+@Getter
 public class Restaurant {
 
     @Id

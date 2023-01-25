@@ -1,11 +1,11 @@
-package com.deliveryN.server.User.Controller;
+package com.deliveryN.server.Member.Controller;
 
 import com.deliveryN.server.Jwt.TokenProvider;
-import com.deliveryN.server.User.Dto.Token.TokenDto;
-import com.deliveryN.server.User.Dto.User.*;
-import com.deliveryN.server.User.Dto.result.ResultDto;
-import com.deliveryN.server.User.Entity.User;
-import com.deliveryN.server.User.Service.UserService;
+import com.deliveryN.server.Member.Dto.Member.*;
+import com.deliveryN.server.Member.Dto.Token.TokenDto;
+import com.deliveryN.server.Member.Dto.result.ResultDto;
+import com.deliveryN.server.Member.Entity.Member;
+import com.deliveryN.server.Member.Service.MemberService;
 import com.deliveryN.server.exception.CustomBody;
 import com.deliveryN.server.exception.CustomException;
 import com.deliveryN.server.exception.CustomMessage;
@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +27,12 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class MemberController {
 
     private final TokenProvider tokenProvider;
-    private final UserService userService;
+    private final MemberService memberservice;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final PasswordEncoder passwordEncoder;
 
     //인증 못받는 유저 /user
     //받은 유저 /
@@ -43,48 +44,53 @@ public class UserController {
         //헤더에 있는 토큰 정보를 가지고 온다
         String jwt = tokenProvider.resolveToken(request);
         String email = tokenProvider.getId(jwt);
-        Optional<User> user = userService.LoginCheck(email);
+        Optional<Member> user = memberservice.LoginCheck(email);
 
-        return new ResponseEntity<>(new UserInfoDto(user.get().getNickName()), org.springframework.http.HttpStatus.OK);
+        return new ResponseEntity<>(new MemberInfoDto(user.get().getNickName()), org.springframework.http.HttpStatus.OK);
     }
     @GetMapping("/user/login")
-    public ResponseEntity<Object> signIn(@Validated LoginDto user){
+    public ResponseEntity<Object> signIn(@Validated LoginDto member){
 
-        Optional<User> userCheck = userService.LoginCheck(user.getEmail());
+        //인증용 토큰 객체 생성
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getEmail(), member.getPassword());
 
-        if (userCheck.isPresent()) {
+        //토큰을 통해 유효한지 검사한다
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userCheck.get().getEmail(), user.getPassword());
-            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.createToken(authentication);
 
-            String jwt = tokenProvider.createToken(authentication);
-            log.info(jwt);
-
-            return new ResponseEntity<>(new TokenDto(jwt),HttpStatus.OK);
-        }
-
-        //존재하지 않는 이메일
-        throw new CustomException(CustomMessage.INVALID_EMAIL);
+        return new ResponseEntity<>(new TokenDto(jwt),HttpStatus.OK);
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<Object> signup(@Validated @RequestBody SignUpDto user) {
+    public ResponseEntity<Object> signup(@Validated @RequestBody SignUpDto member) {
 
-        Optional<User> userCheck = userService.LoginCheck(user.getEmail());
+        Optional<Member> userCheck = memberservice.LoginCheck(member.getEmail());
 
         if (userCheck.isPresent()) {
             throw new CustomException(CustomMessage.CONFLICT_EMAIL);
         }
-        userService.Register(user);
+        else {
 
-        return new ResponseEntity<>(new CustomBody(),HttpStatus.OK);
+            String encodePassword = passwordEncoder.encode(member.getPassword());
+            Member freshMember = Member.builder().
+                    email(member.getEmail()).
+                    password(encodePassword).
+                    nickName(member.getNickName()).
+                    name(member.getName()).
+                    role("ROLE_USER").
+                    build();
+
+            memberservice.Register(freshMember);
+
+            return new ResponseEntity<>(new CustomBody(),HttpStatus.OK);
+        }
     }
 
     //이메일 중복확인
     @GetMapping("/user/email/check")
     public ResponseEntity<Object> emailCheck(@Validated EmailCheckDto email) {
-        if (userService.LoginCheck(email.getEmail()).isEmpty()) {
+        if (memberservice.LoginCheck(email.getEmail()).isEmpty()) {
             return new ResponseEntity<>(new ResultDto(false), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResultDto(true), HttpStatus.CONFLICT);
@@ -94,7 +100,7 @@ public class UserController {
     @GetMapping("/user/password/check")
     public ResponseEntity<ResultDto> passwordCheck(@Validated PasswordCheckDto password) {
 
-        if (userService.PasswordCheck(password.getPassword(), password.getPasswordCheck())) {
+        if (memberservice.PasswordCheck(password.getPassword(), password.getPasswordCheck())) {
             return new ResponseEntity<>(new ResultDto(true), HttpStatus.OK);
         }
         //비밀번호 안맞음
@@ -104,7 +110,7 @@ public class UserController {
     @PutMapping("/password")
     public ResponseEntity<ResultDto> passwordChange(@Validated @RequestBody LoginDto user) {
 
-        userService.PasswordChange(user.getEmail(), user.getPassword());
+      //  memberservice.PasswordChange(user.getEmail(), user.getPassword());
 
         return new ResponseEntity<>(new ResultDto(true),HttpStatus.OK);
     }

@@ -1,67 +1,62 @@
 package com.deliveryN.server.config;
 
-import com.deliveryN.server.Jwt.*;
+import com.deliveryN.server.exception.CustomAccessDeniedHandler;
+import com.deliveryN.server.exception.CustomAuthenticationEntryPoint;
+import com.deliveryN.server.Jwt.JwtFilter;
+import com.deliveryN.server.Jwt.TokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
-@EnableWebSecurity
-@EnableMethodSecurity
 @Configuration
 @AllArgsConstructor
 public class SecurityConfig{
+
     private final TokenProvider tokenProvider;
-    private final CorsFilter corsFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-
+    private final CustomAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    //userdetailservice를 사용한다
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-                .csrf().disable()
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+        http.csrf().disable();
 
-                // 세션을 사용하지 않기 때문에 STATELESS로 설정
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        // 세션을 사용하지 않기 때문에 STATELESS로 설정
+        http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-                //request 제한 url 설정
-                .and()
-                .authorizeHttpRequests()
-                //인증못받은 유저가 접속할수 있는 api
-                .regexMatchers("/user/.*").permitAll()
-                .regexMatchers("/api/.*").permitAll()
-                .regexMatchers("/.*").permitAll()
-                //인증이 필요하다
-                //.regexMatchers("/.*").hasRole("USER")
-                .anyRequest().authenticated();
+        http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+       //예외처리
+        http.exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .accessDeniedHandler(jwtAccessDeniedHandler);
 
 
-        return httpSecurity.build();
+        http.authorizeHttpRequests()
+            .antMatchers("/user/login*").permitAll()
+            .antMatchers("/user/signup").permitAll()
+            .anyRequest().authenticated();
+
+        return http.build();
     }
 }
