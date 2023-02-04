@@ -47,15 +47,16 @@ public class SecurityConfig{
         http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
        //예외처리
-        http.exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(jwtAccessDeniedHandler);
+    //    http.exceptionHandling()
+      //      .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+         //   .accessDeniedHandler(jwtAccessDeniedHandler);
 
 
         http.authorizeHttpRequests()
             .antMatchers("/user/login*").permitAll()
             .antMatchers("/user/signup").permitAll()
-            .anyRequest().authenticated();
+                .antMatchers("/oauth").permitAll()
+            .anyRequest().permitAll();
 
         return http.build();
     }

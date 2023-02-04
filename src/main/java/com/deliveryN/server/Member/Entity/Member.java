@@ -18,7 +18,6 @@ public class Member {
     private Long userId;
 
     private String name;
-
     private String email;
 
     private String password;
@@ -30,7 +29,7 @@ public class Member {
     private String role;
 
     @Builder
-    public Member(String name, String email, String password, String nickName,String role) {
+    public Member(String name,String email, String password, String nickName,String role) {
         this.name = name;
         this.email = email;
         this.password = password;
